@@ -20,6 +20,20 @@
   ],
   "author": "",
   "license": "MIT",
-  "scripts": {},
-  "dependencies": {}
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src tests",
+    "lint:fix": "eslint src tests --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.14.0",
+    "eslint-plugin-jsdoc": "^65.4.5",
+    "prettier": "^3.9.10",
+    "vitest": "^4.1.12"
+  }
 }
