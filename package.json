@@ -1,0 +1,25 @@
+{
+  "name": "envpilot",
+  "version": "0.1.0",
+  "description": "Lightweight environment-variable validation toolkit for Node.js",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "env",
+    "environment",
+    "config",
+    "validation",
+    "dotenv",
+    "12factor"
+  ],
+  "author": "",
+  "license": "MIT",
+  "scripts": {},
+  "dependencies": {}
+}
