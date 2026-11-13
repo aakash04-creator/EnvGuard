@@ -188,11 +188,15 @@ function validateField({ envKey, path, spec, env, environment }) {
   try {
     coerced = coerce(raw, spec.type);
   } catch (err) {
+    // Redact the coercer's error message if the field is secret — the raw
+    // value may appear literally inside strings like `"xyz" is not a valid number`.
+    const secretVals = secret ? [raw] : [];
+    const safeMsg = redact(err.message, secretVals);
     issues.push(
       new ValidationIssue({
         key: envKey,
         code: "INVALID_TYPE",
-        message: `Invalid value for "${envKey}": ${err.message}`,
+        message: `Invalid value for "${envKey}": ${safeMsg}`,
         expected: spec.type,
         received: received(raw),
         why: `The application expects "${envKey}" to be a valid ${spec.type}.`,
