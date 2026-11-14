@@ -1,5 +1,5 @@
 /**
- * @typedef {"MISSING" | "INVALID_TYPE" | "INVALID_SCHEMA"} IssueCode
+ * @typedef {"MISSING" | "INVALID_TYPE" | "INVALID_SCHEMA" | "CUSTOM_VALIDATION"} IssueCode
  */
 
 /**
@@ -13,8 +13,10 @@ export class ValidationIssue {
    * @param {string}    opts.message   - Human-readable explanation.
    * @param {string}    [opts.expected] - What was expected (e.g. "number").
    * @param {string}    [opts.received] - What was actually received (omitted for secrets).
+   * @param {string}    [opts.why]      - Why this is a problem.
+   * @param {string}    [opts.fix]      - How to fix it.
    */
-  constructor({ key, code, message, expected, received }) {
+  constructor({ key, code, message, expected, received, why, fix }) {
     /** @type {string} */
     this.key = key;
     /** @type {IssueCode} */
@@ -25,6 +27,10 @@ export class ValidationIssue {
     this.expected = expected;
     /** @type {string | undefined} */
     this.received = received;
+    /** @type {string | undefined} */
+    this.why = why;
+    /** @type {string | undefined} */
+    this.fix = fix;
   }
 
   /**

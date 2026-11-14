@@ -5,3 +5,5 @@ export { parseEnv } from "./parseEnv.js";
 export { loadEnvFile } from "./loadEnvFile.js";
 export { detectEnvironment } from "./environment.js";
 export { isSecret, isSecretKey, maskValue, redact } from "./secrets.js";
+export { formatReport } from "./report.js";
+export { doctor } from "./doctor.js";
