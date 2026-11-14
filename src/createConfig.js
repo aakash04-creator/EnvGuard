@@ -14,11 +14,14 @@ import { loadEnvFiles } from "./loadEnvFiles.js";
 
 // ─── Schema helpers ──────────────────────────────────────────────────────────
 
+const ALLOWED_PROFILES = new Set(["development", "test", "production"]);
+
 /**
  * A node is a *field spec* when it has a string "type" property.
  * Otherwise it is a *group* (nested namespace).
  *
  * Note: a group cannot contain a variable literally named "type".
+ * The "profiles" key is reserved on a variable spec for environment-specific overrides.
  *
  * @param {unknown} node
  * @returns {boolean}
@@ -71,6 +74,47 @@ function flattenSchema(schema, prefix = [], seen = new Map()) {
         ]);
       }
 
+      if (spec.profiles !== undefined) {
+        if (
+          typeof spec.profiles !== "object" ||
+          spec.profiles === null ||
+          Array.isArray(spec.profiles)
+        ) {
+          throw new EnvPilotError([
+            new ValidationIssue({
+              key: envKey,
+              code: "INVALID_SCHEMA",
+              message: `"profiles" for key "${envKey}" must be an object.`,
+            }),
+          ]);
+        }
+        for (const prof of Object.keys(spec.profiles)) {
+          if (!ALLOWED_PROFILES.has(prof)) {
+            throw new EnvPilotError([
+              new ValidationIssue({
+                key: envKey,
+                code: "INVALID_SCHEMA",
+                message: `Unknown profile "${prof}" for key "${envKey}". Allowed profiles: ${[...ALLOWED_PROFILES].join(", ")}.`,
+              }),
+            ]);
+          }
+          const profVal = spec.profiles[prof];
+          if (
+            typeof profVal !== "object" ||
+            profVal === null ||
+            Array.isArray(profVal)
+          ) {
+            throw new EnvPilotError([
+              new ValidationIssue({
+                key: envKey,
+                code: "INVALID_SCHEMA",
+                message: `Profile "${prof}" for key "${envKey}" must be an object.`,
+              }),
+            ]);
+          }
+        }
+      }
+
       if (seen.has(envKey)) {
         throw new EnvPilotError([
           new ValidationIssue({
@@ -90,6 +134,58 @@ function flattenSchema(schema, prefix = [], seen = new Map()) {
   }
 
   return fields;
+}
+
+/**
+ * Resolve the effective specification for a field in a given environment.
+ * Base spec is shallow-merged with profiles[environment].
+ * Setting default: undefined in a profile explicitly removes a base default.
+ *
+ * @param {Record<string, any>} spec
+ * @param {string} environment
+ * @param {string} envKey
+ * @returns {Record<string, any>}
+ */
+function resolveProfile(spec, environment, envKey) {
+  if (!spec.profiles || !spec.profiles[environment]) {
+    return spec;
+  }
+
+  const profileSpec = spec.profiles[environment];
+  const effective = { ...spec, ...profileSpec };
+
+  // A profile can remove a base default by explicitly setting default: undefined
+  if (
+    Object.prototype.hasOwnProperty.call(profileSpec, "default") &&
+    profileSpec.default === undefined
+  ) {
+    delete effective.default;
+  }
+
+  if (profileSpec.type !== undefined && !VALID_TYPES.has(effective.type)) {
+    throw new EnvPilotError([
+      new ValidationIssue({
+        key: envKey,
+        code: "INVALID_SCHEMA",
+        message: `Unknown type "${effective.type}" in profile "${environment}" for key "${envKey}". Valid types: ${[...VALID_TYPES].join(", ")}.`,
+      }),
+    ]);
+  }
+
+  if (
+    profileSpec.validate !== undefined &&
+    typeof effective.validate !== "function"
+  ) {
+    throw new EnvPilotError([
+      new ValidationIssue({
+        key: envKey,
+        code: "INVALID_SCHEMA",
+        message: `"validate" in profile "${environment}" for key "${envKey}" must be a function.`,
+      }),
+    ]);
+  }
+
+  return effective;
 }
 
 // ─── Deep freeze ─────────────────────────────────────────────────────────────
@@ -282,7 +378,12 @@ function exampleFix(key, type) {
 export function createConfig(schema, options = {}) {
   const { merged, environment } = loadEnvFiles(options);
 
-  const fields = flattenSchema(schema);
+  const rawFields = flattenSchema(schema);
+  const fields = rawFields.map(({ envKey, path, spec }) => ({
+    envKey,
+    path,
+    spec: resolveProfile(spec, environment, envKey),
+  }));
   const issues = [];
   const result = {};
 
@@ -329,7 +430,12 @@ export async function createConfigWithReport(schema, options = {}) {
     return { config: null, issues, warnings: [], environment: "development" };
   }
 
-  const fields = flattenSchema(schema);
+  const rawFields = flattenSchema(schema);
+  const fields = rawFields.map(({ envKey, path, spec }) => ({
+    envKey,
+    path,
+    spec: resolveProfile(spec, environment, envKey),
+  }));
   const issues = [];
   const result = {};
 
