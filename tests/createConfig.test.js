@@ -15,7 +15,9 @@ function getError(schema, env) {
     run(schema, env);
     throw new Error("Expected createConfig to throw");
   } catch (err) {
-    if (err instanceof EnvPilotError) return err;
+    if (err instanceof EnvPilotError) {
+      return err;
+    }
     throw err;
   }
 }

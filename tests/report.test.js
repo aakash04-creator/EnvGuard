@@ -49,9 +49,7 @@ describe("formatReport", () => {
           { key: "A", code: "MISSING", message: "missing" },
           { key: "B", code: "MISSING", message: "missing" },
         ],
-        warnings: [
-          { key: "C", code: "WEAK_SECRET", message: "weak" },
-        ],
+        warnings: [{ key: "C", code: "WEAK_SECRET", message: "weak" }],
         environment: "test",
       },
       { color: false },
@@ -91,6 +89,6 @@ describe("formatReport", () => {
       { color: false },
     );
     // Should NOT contain ANSI escape sequences.
-    expect(report).not.toMatch(/\x1b\[/);
+    expect(report).not.toContain("\x1b[");
   });
 });

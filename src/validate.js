@@ -95,4 +95,3 @@ export function coerce(raw, type) {
  * @type {Set<FieldType>}
  */
 export const VALID_TYPES = new Set(["string", "number", "boolean", "url"]);
-

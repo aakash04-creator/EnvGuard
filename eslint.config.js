@@ -28,9 +28,8 @@ export default [
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",
-      globals: { process: "readonly" },
+      globals: { process: "readonly", URL: "readonly", URLSearchParams: "readonly" },
     },
     ignores: ["node_modules/**", "coverage/**"],
   },
 ];
-

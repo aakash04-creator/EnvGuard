@@ -10,7 +10,7 @@
  *   DEFAULT_IN_PRODUCTION  — variable fell back to its default in production.
  */
 
-import { isSecret, maskValue } from "./secrets.js";
+import { isSecret } from "./secrets.js";
 
 /**
  * @typedef {Object} Warning
@@ -31,7 +31,7 @@ import { isSecret, maskValue } from "./secrets.js";
  * @param {string}  opts.environment                   - Detected environment.
  * @returns {Warning[]}
  */
-export function doctor({ config, schema, fields, env, environment }) {
+export function doctor({ config: _config, schema: _schema, fields, env, environment }) {
   /** @type {Warning[]} */
   const warnings = [];
 
@@ -70,10 +70,7 @@ export function doctor({ config, schema, fields, env, environment }) {
     if (environment === "production" && spec.type === "url" && raw) {
       try {
         const parsed = new URL(raw.trim());
-        if (
-          parsed.hostname === "localhost" ||
-          parsed.hostname === "127.0.0.1"
-        ) {
+        if (parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1") {
           warnings.push({
             key: envKey,
             code: "LOCALHOST_IN_PRODUCTION",

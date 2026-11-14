@@ -74,7 +74,9 @@ async function main() {
     process.exit(code);
   }
 
-  process.stderr.write(`Unknown command: ${args.command}\nRun envpilot --help for usage.\n`);
+  process.stderr.write(
+    `Unknown command: ${args.command}\nRun envpilot --help for usage.\n`,
+  );
   process.exit(2);
 }
 

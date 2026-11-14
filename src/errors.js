@@ -71,4 +71,3 @@ export class EnvPilotError extends Error {
     Object.setPrototypeOf(this, new.target.prototype);
   }
 }
-

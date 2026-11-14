@@ -48,6 +48,7 @@ function shouldColor(opts) {
  * Build a tiny colorizer — returns a no-op when colour is disabled.
  *
  * @param {boolean} enabled
+ * @returns {Record<string, (s: string) => string>}
  */
 function makeC(enabled) {
   if (!enabled) {
@@ -132,9 +133,7 @@ export function formatReport({ issues, warnings, environment }, opts = {}) {
   const sections = [];
 
   // Header
-  sections.push(
-    c.bold(`EnvPilot Report`) + c.dim(` (${environment})`),
-  );
+  sections.push(c.bold(`EnvPilot Report`) + c.dim(` (${environment})`));
   sections.push("");
 
   // Errors

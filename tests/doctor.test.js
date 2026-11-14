@@ -41,9 +41,7 @@ describe("doctor", () => {
       const warnings = doctor({
         config: { DEBUG: true },
         schema: { DEBUG: { type: "boolean" } },
-        fields: [
-          { envKey: "DEBUG", path: ["DEBUG"], spec: { type: "boolean" } },
-        ],
+        fields: [{ envKey: "DEBUG", path: ["DEBUG"], spec: { type: "boolean" } }],
         env: { DEBUG: "true" },
         environment: "production",
       });
@@ -56,9 +54,7 @@ describe("doctor", () => {
       const warnings = doctor({
         config: { DEBUG: true },
         schema: { DEBUG: { type: "boolean" } },
-        fields: [
-          { envKey: "DEBUG", path: ["DEBUG"], spec: { type: "boolean" } },
-        ],
+        fields: [{ envKey: "DEBUG", path: ["DEBUG"], spec: { type: "boolean" } }],
         env: { DEBUG: "true" },
         environment: "development",
       });
@@ -69,9 +65,7 @@ describe("doctor", () => {
       const warnings = doctor({
         config: { DEBUG: false },
         schema: { DEBUG: { type: "boolean" } },
-        fields: [
-          { envKey: "DEBUG", path: ["DEBUG"], spec: { type: "boolean" } },
-        ],
+        fields: [{ envKey: "DEBUG", path: ["DEBUG"], spec: { type: "boolean" } }],
         env: { DEBUG: "false" },
         environment: "production",
       });
@@ -85,9 +79,7 @@ describe("doctor", () => {
       const warnings = doctor({
         config: { API_URL: "http://localhost:3000" },
         schema: { API_URL: { type: "url" } },
-        fields: [
-          { envKey: "API_URL", path: ["API_URL"], spec: { type: "url" } },
-        ],
+        fields: [{ envKey: "API_URL", path: ["API_URL"], spec: { type: "url" } }],
         env: { API_URL: "http://localhost:3000" },
         environment: "production",
       });
@@ -99,9 +91,7 @@ describe("doctor", () => {
       const warnings = doctor({
         config: { DB_URL: "http://127.0.0.1:5432" },
         schema: { DB_URL: { type: "url" } },
-        fields: [
-          { envKey: "DB_URL", path: ["DB_URL"], spec: { type: "url" } },
-        ],
+        fields: [{ envKey: "DB_URL", path: ["DB_URL"], spec: { type: "url" } }],
         env: { DB_URL: "http://127.0.0.1:5432" },
         environment: "production",
       });
@@ -112,9 +102,7 @@ describe("doctor", () => {
       const warnings = doctor({
         config: { API_URL: "https://api.example.com" },
         schema: { API_URL: { type: "url" } },
-        fields: [
-          { envKey: "API_URL", path: ["API_URL"], spec: { type: "url" } },
-        ],
+        fields: [{ envKey: "API_URL", path: ["API_URL"], spec: { type: "url" } }],
         env: { API_URL: "https://api.example.com" },
         environment: "production",
       });

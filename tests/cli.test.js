@@ -93,7 +93,14 @@ describe("CLI", () => {
       join(tmpDir, "envpilot.config.js"),
       `export default { PORT: { type: "number", default: 3000 } };\n`,
     );
-    const { code, stdout } = run(["check", "--cwd", tmpDir, "--json"]);
+    const { code, stdout } = run([
+      "check",
+      "--cwd",
+      tmpDir,
+      "--json",
+      "--env",
+      "development",
+    ]);
     expect(code).toBe(0);
     const parsed = JSON.parse(stdout);
     expect(parsed.ok).toBe(true);
@@ -132,7 +139,7 @@ describe("CLI", () => {
       `export default { PORT: { type: "number", default: 3000 } };\n`,
     );
     const { stdout } = run(["check", "--cwd", tmpDir, "--no-color"]);
-    expect(stdout).not.toMatch(/\x1b\[/);
+    expect(stdout).not.toContain("\x1b[");
   });
 
   // ── Secret safety in CLI output ────────────────────────────────────────────

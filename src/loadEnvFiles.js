@@ -59,11 +59,19 @@ export function loadEnvFiles(opts = {}) {
   const cwd = opts.cwd ?? process.cwd();
 
   if (opts.envFile === false) {
-    const environment = resolveEnvironment({ environment: opts.environment, env: realEnv, cwd });
+    const environment = resolveEnvironment({
+      environment: opts.environment,
+      env: realEnv,
+      cwd,
+    });
     return { merged: { ...realEnv }, environment };
   }
 
-  const environment = resolveEnvironment({ environment: opts.environment, env: realEnv, cwd });
+  const environment = resolveEnvironment({
+    environment: opts.environment,
+    env: realEnv,
+    cwd,
+  });
 
   // Load files lowest → highest precedence.
   const files = [

@@ -139,12 +139,12 @@ Variables are automatically detected as secrets by naming convention (`_SECRET`,
 
 The doctor checks for **warnings** — problems that don't block startup but should be fixed:
 
-| Code | What it catches |
-|------|----------------|
-| `WEAK_SECRET` | Secret value shorter than 16 characters |
-| `DEBUG_IN_PRODUCTION` | Debug mode enabled in production |
-| `LOCALHOST_IN_PRODUCTION` | URL pointing to localhost in production |
-| `DEFAULT_IN_PRODUCTION` | Variable fell back to its default in production |
+| Code                      | What it catches                                 |
+| ------------------------- | ----------------------------------------------- |
+| `WEAK_SECRET`             | Secret value shorter than 16 characters         |
+| `DEBUG_IN_PRODUCTION`     | Debug mode enabled in production                |
+| `LOCALHOST_IN_PRODUCTION` | URL pointing to localhost in production         |
+| `DEFAULT_IN_PRODUCTION`   | Variable fell back to its default in production |
 
 Use `createConfigWithReport` to get warnings without throwing:
 
@@ -171,24 +171,24 @@ The CLI loads your schema from `envpilot.config.js` (or `.mjs`) and validates th
 
 ### Options
 
-| Flag | Description |
-|------|-------------|
-| `--env <name>` | Override environment (development/test/production) |
-| `--cwd <dir>` | Working directory (default: `.`) |
-| `--config <path>` | Path to config file |
-| `--json` | Output JSON (secrets always masked) |
-| `--no-color` | Disable colours |
-| `--strict` | Treat warnings as failures (exit 1) |
-| `--help` | Show help |
-| `--version` | Show version |
+| Flag              | Description                                        |
+| ----------------- | -------------------------------------------------- |
+| `--env <name>`    | Override environment (development/test/production) |
+| `--cwd <dir>`     | Working directory (default: `.`)                   |
+| `--config <path>` | Path to config file                                |
+| `--json`          | Output JSON (secrets always masked)                |
+| `--no-color`      | Disable colours                                    |
+| `--strict`        | Treat warnings as failures (exit 1)                |
+| `--help`          | Show help                                          |
+| `--version`       | Show version                                       |
 
 ### Exit Codes
 
-| Code | Meaning |
-|------|---------|
-| `0` | All valid |
-| `1` | Validation errors (or warnings with `--strict`) |
-| `2` | Usage or config-loading error |
+| Code | Meaning                                         |
+| ---- | ----------------------------------------------- |
+| `0`  | All valid                                       |
+| `1`  | Validation errors (or warnings with `--strict`) |
+| `2`  | Usage or config-loading error                   |
 
 ### Example Output
 
@@ -264,12 +264,12 @@ Format issues and warnings into a human-readable report string.
 
 ### Options
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| `env` | `process.env` | Environment object to read from |
-| `envFile` | `true` | Load `.env` files |
-| `cwd` | `process.cwd()` | Directory for `.env` files |
-| `environment` | auto-detect | Override environment |
+| Option        | Default         | Description                     |
+| ------------- | --------------- | ------------------------------- |
+| `env`         | `process.env`   | Environment object to read from |
+| `envFile`     | `true`          | Load `.env` files               |
+| `cwd`         | `process.cwd()` | Directory for `.env` files      |
+| `environment` | auto-detect     | Override environment            |
 
 ## Coming Soon
 

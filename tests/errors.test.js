@@ -77,7 +77,13 @@ describe("EnvPilotError", () => {
   it("exposes all issues", () => {
     const issues = [
       new ValidationIssue({ key: "A", code: "MISSING", message: "Missing A" }),
-      new ValidationIssue({ key: "B", code: "INVALID_TYPE", message: "Bad B", expected: "number", received: "foo" }),
+      new ValidationIssue({
+        key: "B",
+        code: "INVALID_TYPE",
+        message: "Bad B",
+        expected: "number",
+        received: "foo",
+      }),
     ];
     const err = new EnvPilotError(issues);
     expect(err.issues).toHaveLength(2);
@@ -96,4 +102,3 @@ describe("EnvPilotError", () => {
     expect(err.message).toContain("Missing B");
   });
 });
-

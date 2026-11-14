@@ -4,7 +4,6 @@
  */
 import { createConfigWithReport } from "../createConfig.js";
 import { formatReport } from "../report.js";
-import { redact } from "../secrets.js";
 import { loadSchema } from "./loadSchema.js";
 
 /**
@@ -38,10 +37,7 @@ export async function check(args) {
     options.environment = args.env;
   }
 
-  const { config, issues, warnings, environment } = await createConfigWithReport(
-    schema,
-    options,
-  );
+  const { issues, warnings, environment } = await createConfigWithReport(schema, options);
 
   // ── JSON output ────────────────────────────────────────────────────────────
   if (args.json) {

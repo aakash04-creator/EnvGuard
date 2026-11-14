@@ -27,7 +27,7 @@ function isFieldSpec(node) {
   return (
     node !== null &&
     typeof node === "object" &&
-    typeof /** @type {any} */ (node).type === "string"
+    typeof (/** @type {any} */ (node).type) === "string"
   );
 }
 
@@ -231,7 +231,8 @@ function validateField({ envKey, path, spec, env, environment }) {
     }
 
     if (result !== true && result !== undefined) {
-      const rawMsg = typeof result === "string" ? result : `Value for "${envKey}" is invalid.`;
+      const rawMsg =
+        typeof result === "string" ? result : `Value for "${envKey}" is invalid.`;
       const secretVals = secret ? [raw] : [];
       const safeMsg = redact(rawMsg, secretVals);
       issues.push(
@@ -315,9 +316,16 @@ export async function createConfigWithReport(schema, options = {}) {
   try {
     ({ merged, environment } = loadEnvFiles(options));
   } catch (err) {
-    const issues = err instanceof EnvPilotError ? err.issues : [
-      new ValidationIssue({ key: "SETUP", code: "INVALID_SCHEMA", message: String(err) }),
-    ];
+    const issues =
+      err instanceof EnvPilotError
+        ? err.issues
+        : [
+            new ValidationIssue({
+              key: "SETUP",
+              code: "INVALID_SCHEMA",
+              message: String(err),
+            }),
+          ];
     return { config: null, issues, warnings: [], environment: "development" };
   }
 
