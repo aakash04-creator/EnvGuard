@@ -1,15 +1,29 @@
 {
-  "name": "envpilot",
+  "name": "@aakash04/envpilot",
   "version": "0.1.0",
-  "description": "Lightweight environment-variable validation toolkit for Node.js",
+  "description": "A lightweight JavaScript configuration validation toolkit that helps developers catch environment-variable errors before they become production problems.",
   "type": "module",
   "main": "src/index.js",
+  "types": "index.d.ts",
   "exports": {
-    ".": "./src/index.js"
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "bin": {
     "envpilot": "bin/envpilot.js"
   },
+  "files": [
+    "src",
+    "bin",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
   "engines": {
     "node": ">=18"
   },
@@ -17,23 +31,37 @@
     "env",
     "environment",
     "config",
+    "configuration",
     "validation",
     "dotenv",
-    "12factor"
+    "12factor",
+    "secrets",
+    "cli"
   ],
-  "author": "",
+  "author": "aakash04-creator",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aakash04-creator/EnvGuard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aakash04-creator/EnvGuard/issues"
+  },
+  "homepage": "https://github.com/aakash04-creator/EnvGuard#readme",
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "coverage": "vitest run --coverage",
     "lint": "eslint src tests",
     "lint:fix": "eslint src tests --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepublishOnly": "npm run lint && npm test && npm run coverage"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.1.12",
     "eslint": "^10.14.0",
     "eslint-plugin-jsdoc": "^65.4.5",
     "prettier": "^3.9.10",

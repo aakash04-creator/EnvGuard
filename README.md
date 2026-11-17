@@ -7,7 +7,7 @@ EnvPilot validates your environment variables at startup and explains **what** i
 ## Install
 
 ```bash
-npm install envpilot
+npm install @aakash04/envpilot
 ```
 
 ## Quick Start
@@ -24,7 +24,7 @@ export default {
 
 ```js
 // app.js
-import { createConfig } from "envpilot";
+import { createConfig } from "@aakash04/envpilot";
 import schema from "./envpilot.config.js";
 
 const config = createConfig(schema);
@@ -149,7 +149,7 @@ The doctor checks for **warnings** — problems that don't block startup but sho
 Use `createConfigWithReport` to get warnings without throwing:
 
 ```js
-import { createConfigWithReport } from "envpilot";
+import { createConfigWithReport } from "@aakash04/envpilot";
 
 const { config, issues, warnings, environment } = await createConfigWithReport(schema);
 

@@ -2,14 +2,13 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    // Run test files inside tests/
-    include: ["tests/**/*.test.js"],
-    // Print a clear diff on assertion failures
-    reporters: ["verbose"],
     coverage: {
       provider: "v8",
-      reporter: ["text", "lcov"],
       include: ["src/**"],
+      // CLI is tested end-to-end via child_process (not visible to v8);
+      // index.js only re-exports.
+      exclude: ["src/cli/**", "src/index.js"],
+      thresholds: { lines: 85, statements: 85, branches: 80, functions: 80 },
     },
   },
 });
