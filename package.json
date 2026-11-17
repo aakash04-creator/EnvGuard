@@ -1,6 +1,6 @@
 {
   "name": "@aakash04/envpilot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A lightweight JavaScript configuration validation toolkit that helps developers catch environment-variable errors before they become production problems.",
   "type": "module",
   "main": "src/index.js",
